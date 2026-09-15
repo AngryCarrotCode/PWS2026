@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c3nsqc4gjtvpn"]
+
+[ext_resource type="Texture2D" uid="uid://twlenr2b1wnh" path="res://Assets/Towers/base2.png" id="1_42k04"]
+[ext_resource type="Script" uid="uid://dhs4dddkr64g2" path="res://Scenes/Towers/MissileT1.cs" id="1_ltg74"]
+[ext_resource type="Texture2D" uid="uid://dedbu0w7vwax7" path="res://Assets/Towers/top1.png" id="2_pgrpt"]
+[ext_resource type="Texture2D" uid="uid://dt6c70dwval02" path="res://Assets/Towers/projectile1.png" id="3_3sscj"]
+
+[node name="MissileT1" type="Node2D" unique_id=1345737888]
+script = ExtResource("1_ltg74")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1705108394]
+texture = ExtResource("1_42k04")
+
+[node name="turret" type="Sprite2D" parent="." unique_id=1103128624]
+rotation = 6.2831855
+texture = ExtResource("2_pgrpt")
+
+[node name="missile2" type="Sprite2D" parent="turret" unique_id=951118560]
+texture = ExtResource("3_3sscj")
+offset = Vector2(11, -11)
+
+[node name="missile1" type="Sprite2D" parent="turret" unique_id=362971197]
+texture = ExtResource("3_3sscj")
+offset = Vector2(11, 11)

@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://cbco54hr0tyks"]
+
+[ext_resource type="PackedScene" uid="uid://cd7qkh5m8rtd1" path="res://Scenes/Maps/map_1.tscn" id="1_ianr5"]
+[ext_resource type="Script" uid="uid://b4ea5p1b3gdek" path="res://Scenes/MainScenes/GameScene.cs" id="1_no243"]
+[ext_resource type="Texture2D" uid="uid://cj4oyeox1pqka" path="res://Assets/UI/Buttons/button_square_depth_gradient.png" id="2_tnagp"]
+[ext_resource type="Script" uid="uid://cjub1541yrsu6" path="res://Scenes/MainScenes/Ui.cs" id="3_jem3k"]
+[ext_resource type="Texture2D" uid="uid://dinvuogeo0r6y" path="res://Assets/UI/Buttons/button_square_depth_flat.png" id="3_o10dm"]
+[ext_resource type="Texture2D" uid="uid://bmrc08x7fcdly" path="res://Assets/Towers/top2.png" id="4_no243"]
+[ext_resource type="Texture2D" uid="uid://dt6c70dwval02" path="res://Assets/Towers/projectile1.png" id="5_jem3k"]
+[ext_resource type="Texture2D" uid="uid://v7n62kyku7yq" path="res://Assets/UI/Buttons/button_square_depth_gloss.png" id="5_tcjp3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u35ao"]
+texture = ExtResource("2_tnagp")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tcjp3"]
+texture = ExtResource("5_tcjp3")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wdvvh"]
+texture = ExtResource("3_o10dm")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_br1xs"]
+texture = ExtResource("5_tcjp3")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="GameScene" type="Node2D" unique_id=1010959831]
+script = ExtResource("1_no243")
+
+[node name="Map 1" parent="." unique_id=1770892433 instance=ExtResource("1_ianr5")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=662575717]
+script = ExtResource("3_jem3k")
+
+[node name="HUD" type="Control" parent="UI" unique_id=1504577883]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BuildBar" type="VBoxContainer" parent="UI/HUD" unique_id=36827542]
+custom_minimum_size = Vector2(50, 400)
+custom_maximum_size = Vector2(50, -1)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -400.0
+offset_right = 100.0
+grow_vertical = 0
+offset_transform_enabled = true
+offset_transform_position = Vector2(10, 0)
+theme_override_constants/separation = 25
+
+[node name="Gun" type="Button" parent="UI/HUD/BuildBar" unique_id=360366544 groups=["buildButtons"]]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_u35ao")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tcjp3")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wdvvh")
+
+[node name="Icon" type="TextureRect" parent="UI/HUD/BuildBar/Gun" unique_id=1611104050]
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = -7.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_no243")
+
+[node name="Missile" type="Button" parent="UI/HUD/BuildBar" unique_id=122934843 groups=["buildButtons"]]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_u35ao")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_br1xs")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wdvvh")
+
+[node name="Icon" type="TextureRect" parent="UI/HUD/BuildBar/Missile" unique_id=316312141]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 7.0
+offset_right = -7.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_jem3k")

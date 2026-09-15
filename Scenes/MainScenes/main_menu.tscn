@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://cipg1bsc7twqr"]
+
+[ext_resource type="Texture2D" uid="uid://lah1gfqnooom" path="res://Assets/UI/Art/main menu.jpg" id="1_pm3d6"]
+[ext_resource type="Texture2D" uid="uid://dinvuogeo0r6y" path="res://Assets/UI/Buttons/button_square_depth_flat.png" id="2_5aow8"]
+[ext_resource type="FontFile" uid="uid://bg7ubt6cnbgfq" path="res://Assets/Fonts/Kenney Future Narrow.ttf" id="2_cvn1r"]
+[ext_resource type="Texture2D" uid="uid://v7n62kyku7yq" path="res://Assets/UI/Buttons/button_square_depth_gloss.png" id="3_hmtvc"]
+[ext_resource type="Texture2D" uid="uid://cj4oyeox1pqka" path="res://Assets/UI/Buttons/button_square_depth_gradient.png" id="4_1dh2t"]
+
+[sub_resource type="Theme" id="Theme_umclc"]
+default_font = ExtResource("2_cvn1r")
+default_font_size = 25
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hmtvc"]
+texture = ExtResource("4_1dh2t")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cvn1r"]
+texture = ExtResource("3_hmtvc")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1dh2t"]
+texture = ExtResource("2_5aow8")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="MainMenu" type="Control" unique_id=594521796]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="B" type="TextureRect" parent="." unique_id=236947164]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_pm3d6")
+expand_mode = 3
+
+[node name="M" type="MarginContainer" parent="." unique_id=1338192909]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VB" type="VBoxContainer" parent="M" unique_id=693352367]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 3
+alignment = 2
+
+[node name="NewGame" type="Button" parent="M/VB" unique_id=1869120258]
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 2
+size_flags_vertical = 2
+theme = SubResource("Theme_umclc")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_hmtvc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cvn1r")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
+text = "New  Game"
+
+[node name="LoadGame" type="Button" parent="M/VB" unique_id=1189472099]
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 2
+size_flags_vertical = 2
+theme = SubResource("Theme_umclc")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_hmtvc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cvn1r")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
+text = "Load Game"
+
+[node name="Settings" type="Button" parent="M/VB" unique_id=1488582947]
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 2
+size_flags_vertical = 2
+theme = SubResource("Theme_umclc")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_hmtvc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cvn1r")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
+text = "Settings"
+
+[node name="Spacing" type="Control" parent="M/VB" unique_id=916126970]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="QuitGame" type="Button" parent="M/VB" unique_id=1066584869]
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 2
+size_flags_vertical = 2
+theme = SubResource("Theme_umclc")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_hmtvc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cvn1r")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
+text = "Quit Game"
