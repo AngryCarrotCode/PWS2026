@@ -1,9 +1,33 @@
 [gd_scene format=3 uid="uid://c3nsqc4gjtvpn"]
 
-[ext_resource type="Texture2D" uid="uid://twlenr2b1wnh" path="res://Assets/Towers/base2.png" id="1_42k04"]
+[ext_resource type="Texture2D" uid="uid://mejqx76ujnv3" path="res://Assets/Towers/base2.png" id="1_42k04"]
 [ext_resource type="Script" uid="uid://dhs4dddkr64g2" path="res://Scenes/Towers/MissileT1.cs" id="1_ltg74"]
-[ext_resource type="Texture2D" uid="uid://dedbu0w7vwax7" path="res://Assets/Towers/top1.png" id="2_pgrpt"]
-[ext_resource type="Texture2D" uid="uid://dt6c70dwval02" path="res://Assets/Towers/projectile1.png" id="3_3sscj"]
+[ext_resource type="Texture2D" uid="uid://ddg0kgwn5ybid" path="res://Assets/Towers/top1.png" id="2_pgrpt"]
+[ext_resource type="Texture2D" uid="uid://dc2i6txsgxr4c" path="res://Assets/Towers/projectile1.png" id="3_3sscj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ltg74"]
+radius = 20.0
+
+[sub_resource type="Animation" id="Animation_ltg74"]
+resource_name = "Fire"
+length = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("turret/fire:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8tp0e"]
+_data = {
+&"Fire": SubResource("Animation_ltg74")
+}
 
 [node name="MissileT1" type="Node2D" unique_id=1345737888]
 script = ExtResource("1_ltg74")
@@ -22,3 +46,16 @@ offset = Vector2(11, -11)
 [node name="missile1" type="Sprite2D" parent="turret" unique_id=362971197]
 texture = ExtResource("3_3sscj")
 offset = Vector2(11, 11)
+
+[node name="fire" type="Sprite2D" parent="turret" unique_id=1216093095]
+
+[node name="Range" type="Area2D" parent="." unique_id=1233380881]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range" unique_id=1747826016]
+shape = SubResource("CircleShape2D_ltg74")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=996587957]
+libraries/ = SubResource("AnimationLibrary_8tp0e")
+
+[connection signal="body_entered" from="Range" to="." method="onRangeBodyEntered"]
+[connection signal="body_exited" from="Range" to="." method="onRangeBodyExited"]

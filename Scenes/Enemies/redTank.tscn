@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ds307v033xrdq"]
+
+[ext_resource type="Script" uid="uid://bukmte2r1oeh6" path="res://Scenes/Enemies/RedTank.cs" id="1_gpfkk"]
+[ext_resource type="Texture2D" uid="uid://6hh27m7g4j8c" path="res://Assets/Enemies/tank_red.png" id="2_n3i6x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_umclc"]
+size = Vector2(48, 48)
+
+[node name="RedTank" type="PathFollow2D" unique_id=561758189]
+loop = false
+script = ExtResource("1_gpfkk")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=919771703]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1826826586]
+texture = ExtResource("2_n3i6x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=2122207458]
+shape = SubResource("RectangleShape2D_umclc")

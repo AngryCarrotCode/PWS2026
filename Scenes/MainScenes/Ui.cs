@@ -5,11 +5,15 @@ public partial class Ui : CanvasLayer
 {
 
 	int towerRange = 350;
+	private TextureProgressBar hpBar;
 	private GameData gameData;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		ProcessMode = ProcessModeEnum.Always;
 		gameData = GetNode<GameData>("/root/GameData");
+		hpBar = GetNode<TextureProgressBar>("HUD/InfoBar/H/HP");
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -57,4 +61,46 @@ public partial class Ui : CanvasLayer
 		}
 	}
 
+	//
+	// Game Control Functions
+	//
+	public void OnPausePlayPressed()
+{
+    GetTree().Paused = !GetTree().Paused;
+		var gameScene = GetParent<GameScene>();
+		if (gameScene.currentWave == 0)
+		{
+			gameScene.startWave();
+		}
+		if (GetParent<GameScene>().buildMode){
+			GetParent<GameScene>().cancelBuildMode();
+		}
+		var buildBar = GetNode<Control>("HUD/BuildBar");
+		buildBar.ProcessMode = GetTree().Paused
+			? ProcessModeEnum.Pausable
+			: ProcessModeEnum.Always;
+		if (gameScene.currentWave == 0)
+		{
+			buildBar.ProcessMode = ProcessModeEnum.Always;
+		}
+}
+	public void onSpeedUpPressed()
+	{
+		if (Engine.TimeScale == 2.0f){
+			Engine.TimeScale = 1.0f;
+		}else{
+			Engine.TimeScale = 2.0f;
+		}
+	}
+	public void UpdateHealthBar(int baseHealth){
+		var hpBarTween = CreateTween();
+		hpBarTween.TweenProperty(hpBar, "value", baseHealth, 0.1f);
+		if (baseHealth >= 60){
+			hpBar.TintProgress = new Color("4eff15");
+		}else if(baseHealth <= 60 && baseHealth >=25){
+			hpBar.TintProgress = new Color("e1be32");
+		}else{
+			hpBar.TintProgress = new Color("e11e1e");
+		}
+	}
 }

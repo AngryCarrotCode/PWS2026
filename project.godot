@@ -24,7 +24,7 @@ GameData="*uid://blx1y423ji28h"
 window/size/viewport_width=1280
 window/size/viewport_height=704
 window/stretch/mode="canvas_items"
-mouse_cursor/custom_image="uid://bjhcu31pjcq84"
+mouse_cursor/custom_image="res://Assets/UI/cursor_g.svg"
 
 [dotnet]
 

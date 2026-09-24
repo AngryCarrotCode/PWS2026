@@ -9,22 +9,26 @@ public partial class GameData : Node
 		{ "GunT1", new Dictionary<string, object>()
 			{
 				{ "damage", 20 },
-				{ "range", 350 },
-				{ "fireRate", 1.0f }
+				{ "range", 340 },
+				{ "fireRate", 1.0f },
+				{ "category", "gun" }
 			}
 		},
 		{ "GunT2", new Dictionary<string, object>()
 			{
 				{ "damage", 25 },
 				{ "range", 400 },
-				{ "fireRate", 0.8f }
+				{ "fireRate", 0.8f },
+				{ "category", "gun" }
+
 			}
 		},
 		{ "MissileT1", new Dictionary<string, object>()
 			{
 				{ "damage", 100 },
 				{ "range", 550 },
-				{ "fireRate", 3f }
+				{ "fireRate", 3f },
+				{ "category", "missile" }
 			}
 		}
 	};

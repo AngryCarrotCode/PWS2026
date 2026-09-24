@@ -1,8 +1,51 @@
 [gd_scene format=3 uid="uid://dnue6mrajgeyp"]
 
 [ext_resource type="Script" uid="uid://ce5l5fqksp8p4" path="res://Scenes/Towers/GunT1.cs" id="1_jkacp"]
-[ext_resource type="Texture2D" uid="uid://owedwlr3w8r8" path="res://Assets/Towers/Base1.png" id="1_wtard"]
-[ext_resource type="Texture2D" uid="uid://bmrc08x7fcdly" path="res://Assets/Towers/top2.png" id="2_t713f"]
+[ext_resource type="Texture2D" uid="uid://1resrfek06ih" path="res://Assets/Towers/Base1.png" id="1_wtard"]
+[ext_resource type="Texture2D" uid="uid://cuoyyqp1qk8vf" path="res://Assets/Towers/top2.png" id="2_t713f"]
+[ext_resource type="Texture2D" uid="uid://br6twik8ic5s6" path="res://Assets/Effects/MuzzleFlash.png" id="4_3fxyc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_umclc"]
+radius = 20.0
+
+[sub_resource type="Animation" id="Animation_tkwhv"]
+resource_name = "Fire"
+length = 0.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("turret/fire:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_u88oc"]
+length = 0.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("turret/fire:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8j77k"]
+_data = {
+&"Fire": SubResource("Animation_tkwhv"),
+&"RESET": SubResource("Animation_u88oc")
+}
 
 [node name="GunT1" type="Node2D" unique_id=312849813]
 script = ExtResource("1_jkacp")
@@ -14,5 +57,20 @@ texture = ExtResource("1_wtard")
 texture = ExtResource("2_t713f")
 offset = Vector2(12, 0)
 
-[node name="muzzle" type="Marker2D" parent="turret" unique_id=893219410]
-position = Vector2(43, 0)
+[node name="fire" type="Sprite2D" parent="turret" unique_id=1922393521]
+position = Vector2(53, 0)
+rotation = 1.5707964
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_3fxyc")
+
+[node name="Range" type="Area2D" parent="." unique_id=1579324070]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range" unique_id=58926386]
+shape = SubResource("CircleShape2D_umclc")
+debug_color = Color(0.95686275, 0, 0.53333336, 0.36862746)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1647430290]
+libraries/ = SubResource("AnimationLibrary_8j77k")
+
+[connection signal="body_entered" from="Range" to="." method="onRangeBodyEntered"]
+[connection signal="body_exited" from="Range" to="." method="onRangeBodyExited"]
