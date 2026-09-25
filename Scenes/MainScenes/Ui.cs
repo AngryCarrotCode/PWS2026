@@ -7,6 +7,7 @@ public partial class Ui : CanvasLayer
 	int towerRange = 350;
 	private TextureProgressBar hpBar;
 	private GameData gameData;
+	private Node2D cardPreview;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -19,6 +20,10 @@ public partial class Ui : CanvasLayer
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (GodotObject.IsInstanceValid(cardPreview))
+		{
+			cardPreview.GlobalPosition = GetViewport().GetMousePosition();
+		}
 	}
 
 	public void setTowerPreview(string towerType, Vector2 mousePosition)
@@ -92,6 +97,26 @@ public partial class Ui : CanvasLayer
 			Engine.TimeScale = 2.0f;
 		}
 	}
+
+	public void onQuitPressed()
+	{
+		GetTree().Quit();
+	}
+		
+
+	public void onCardPressed()
+	{
+		if (GodotObject.IsInstanceValid(cardPreview))
+			cardPreview.QueueFree();
+
+		var cardScene = GD.Load<PackedScene>("res://Cards/KH.tscn");
+		cardPreview = cardScene.Instantiate<Node2D>();
+		cardPreview.Name = "CardPreview";
+		cardPreview.GlobalPosition = GetViewport().GetMousePosition();
+		AddChild(cardPreview);
+		MoveChild(cardPreview, 0);
+		GetParent<GameScene>().startCardPreview();
+	}
 	public void UpdateHealthBar(int baseHealth){
 		var hpBarTween = CreateTween();
 		hpBarTween.TweenProperty(hpBar, "value", baseHealth, 0.1f);
@@ -102,5 +127,19 @@ public partial class Ui : CanvasLayer
 		}else{
 			hpBar.TintProgress = new Color("e11e1e");
 		}
+	}
+
+	public void updateCardPreview(Vector2 tilePosition, string color)
+	{
+		if (!GodotObject.IsInstanceValid(cardPreview)) return;
+		cardPreview.GlobalPosition = GetViewport().GetMousePosition();
+		cardPreview.Modulate = new Color(color);
+	}
+
+	public void clearCardPreview()
+	{
+		if (GodotObject.IsInstanceValid(cardPreview))
+			cardPreview.QueueFree();
+		cardPreview = null;
 	}
 }

@@ -81,6 +81,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
 text = "New  Game"
 
 [node name="LoadGame" type="Button" parent="M/VB" unique_id=1189472099]
+modulate = Color(0.1882353, 0.1882353, 0.1882353, 1)
 custom_minimum_size = Vector2(350, 75)
 layout_mode = 2
 size_flags_vertical = 2
@@ -93,6 +94,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
 text = "Load Game"
 
 [node name="Settings" type="Button" parent="M/VB" unique_id=1488582947]
+modulate = Color(0.18717614, 0.18717614, 0.18717614, 1)
 custom_minimum_size = Vector2(350, 75)
 layout_mode = 2
 size_flags_vertical = 2

@@ -11,13 +11,19 @@ public partial class GameScene : Node2D
 
 	public bool buildMode = false;
 	private bool buildValid = false;
+	private bool cardPreviewActive = false;
 	private Vector2 buildLocation;
 	private string buildType;
+	private Towers hoveredTower = null;
 
 	private Vector2I buildTile;
 	public int currentWave;
 	private int enemiesInWave;
 	public int baseHealth = 100;
+
+	public int cash = 100;
+
+	public int cardCost = -50;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -30,6 +36,7 @@ public partial class GameScene : Node2D
 			i.Connect("pressed", Callable.From(() => InitiateBuildMode(i.Name)));
 		}
 		GetTree().Paused = true;
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -39,6 +46,10 @@ public partial class GameScene : Node2D
 		{
 			updateTowerPreview();
 		}
+		if (cardPreviewActive)
+		{
+			updateCardPreview();
+		}
 	}
 	//
 	// Building Functions
@@ -46,6 +57,10 @@ public partial class GameScene : Node2D
 
 	private void InitiateBuildMode(string towerType)
 	{
+		if (cardPreviewActive)
+		{
+			cancelCardMode();
+		}
 		if (buildMode)
 		{
 			cancelBuildMode();
@@ -57,21 +72,29 @@ public partial class GameScene : Node2D
 
 	private void verifyAndBuild()
 	{
-		
-		if (buildValid) // Check if the player has enough cash (not implemented yet)
+		var towerScene = GD.Load<PackedScene>("res://Scenes/Towers/" + buildType + ".tscn");
+		var newTower = towerScene.Instantiate<Towers>();
+		newTower.towerType = buildType;
+		var gameData = GetNode<GameData>("/root/GameData");
+		var cost = Convert.ToInt32(gameData.towerData[buildType]["cost"]);
+		if (buildValid && cash >= cost) // Check if the player has enough cash
 		{
-			var gameData = GetNode<GameData>("/root/GameData");
-			var towerScene = GD.Load<PackedScene>("res://Scenes/Towers/" + buildType + ".tscn");
-			var newTower = towerScene.Instantiate<Towers>();
 			newTower.Position = buildLocation;
-			newTower.towerType = buildType;
 			newTower.category = gameData.towerData[buildType]["category"].ToString();
 			newTower.built = true;
 			mapNode.AddChild(newTower);
 			mapNode.GetNode<TileMapLayer>("TowerExclusion").SetCell(buildTile, 5, Vector2I.Zero); // Mark the tile as occupied
 			newTower.GetNode<Sprite2D>("turret/fire").Visible = false;
-			//deduct cash from player (not implemented yet)
-			// update cash label (not implemented yet)
+			changeCash(- cost);
+		}
+	}
+
+	private void verifyAndCard()
+	{
+		if (GodotObject.IsInstanceValid(hoveredTower) && cash >= cardCost)
+		{
+			hoveredTower.damageModifier += 20;
+			changeCash(cardCost);
 		}
 	}
 
@@ -97,6 +120,38 @@ public partial class GameScene : Node2D
 		}
 	}
 
+	public void updateCardPreview()
+	{
+		var mousePos = GetGlobalMousePosition();
+		var towerExclusion = mapNode.GetNode<TileMapLayer>("TowerExclusion");
+		var currentTile = towerExclusion.LocalToMap(towerExclusion.ToLocal(mousePos));
+		var tilePos = towerExclusion.ToGlobal(towerExclusion.MapToLocal(currentTile));
+		var aboveTurret = false;
+		foreach (Node child in mapNode.GetChildren())
+		{
+			if (child is Towers tower && towerExclusion.LocalToMap(towerExclusion.ToLocal(tower.GlobalPosition)) == currentTile)
+			{
+				hoveredTower = tower;
+				aboveTurret = true;
+				break;
+			}
+			else
+			{
+				hoveredTower = null;
+			}
+		}
+		GetNode<Ui>("UI").updateCardPreview(tilePos, aboveTurret ? "54ff3caa" : "ff3c3caa");
+	}
+
+	public void startCardPreview()
+	{
+		cardPreviewActive = true;
+		if (buildMode)
+		{
+			cancelBuildMode();
+		}
+	}
+
 	public override void _UnhandledInput(InputEvent inputEvent)
 	{
 		if (inputEvent.IsActionPressed("ui_cancel") && buildMode)
@@ -108,6 +163,16 @@ public partial class GameScene : Node2D
 			verifyAndBuild();
 			cancelBuildMode();
 		}
+
+		if (inputEvent.IsActionPressed("ui_cancel") && cardPreviewActive)
+		{
+			cancelCardMode();
+		}
+		if (inputEvent.IsActionPressed("ui_accept") && cardPreviewActive)
+		{
+			verifyAndCard();
+			cancelCardMode();
+		}
 	}
 	
 	public void cancelBuildMode()
@@ -115,6 +180,13 @@ public partial class GameScene : Node2D
 		buildMode = false;
 		buildValid = false;
 		GetNode<Ui>("UI").GetNode<Control>("TowerPreview").Free();
+	}
+
+	public void cancelCardMode()
+	{
+		cardPreviewActive = false;
+		GetNode<Ui>("UI").clearCardPreview();
+		hoveredTower = null;
 	}
 	//
 	// Wave Functions
@@ -132,6 +204,13 @@ public partial class GameScene : Node2D
 		var waveData = new List<(string sceneName, float delay)>
 		{
 			("blueTank", 3.0f),
+			("blueTank", 0.2f),
+			("blueTank", 2.0f),
+			("blueTank", 0.2f),
+			("blueTank", 0.7f),
+			("blueTank", 1.3f),
+			("blueTank", 1.0f),
+			("blueTank", 0.5f),
 			("blueTank", 0.1f)
 		};
 		currentWave += 1;
@@ -159,6 +238,11 @@ public partial class GameScene : Node2D
 	}
 }
 
-
+ public void changeCash(int amount)
+ {
+	 cash += amount;
+	 GetNode<Label>("UI/HUD/InfoBar/H/Money").Text = cash.ToString();
+	
+ }
 
 }

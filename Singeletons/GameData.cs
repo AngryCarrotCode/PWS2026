@@ -11,7 +11,8 @@ public partial class GameData : Node
 				{ "damage", 20 },
 				{ "range", 340 },
 				{ "fireRate", 1.0f },
-				{ "category", "gun" }
+				{ "category", "gun" },
+				{ "cost", 100}
 			}
 		},
 		{ "GunT2", new Dictionary<string, object>()
@@ -19,7 +20,8 @@ public partial class GameData : Node
 				{ "damage", 25 },
 				{ "range", 400 },
 				{ "fireRate", 0.8f },
-				{ "category", "gun" }
+				{ "category", "gun" },
+				{ "cost", 250 }
 
 			}
 		},
@@ -28,7 +30,8 @@ public partial class GameData : Node
 				{ "damage", 100 },
 				{ "range", 550 },
 				{ "fireRate", 3f },
-				{ "category", "missile" }
+				{ "category", "missile" },
+				{"cost", 400 }
 			}
 		}
 	};

@@ -15,6 +15,7 @@ public partial class Towers : Node2D
 	public string towerType;
 	public string category;
 	private GameData gameData;
+	public int damageModifier;
 
 
 	public override void _Ready()
@@ -79,7 +80,9 @@ public partial class Towers : Node2D
 				fireMissile();
 				break;
 		}
-		enemy.OnHit(Convert.ToInt32(gameData.towerData[towerType]["damage"]));
+
+		var damage = Convert.ToInt32(gameData.towerData[towerType]["damage"]) + damageModifier;
+		enemy.OnHit(damage);
 		await ToSignal(GetTree().CreateTimer(Convert.ToDouble(gameData.towerData[towerType]["fireRate"])), SceneTreeTimer.SignalName.Timeout);
 		ready = true;
 	}

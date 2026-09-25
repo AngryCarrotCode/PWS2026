@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://xl7v8uick0a1"]
+
+[ext_resource type="Texture2D" uid="uid://eonrktfxslil" path="res://Assets/Cards/card_hearts_K.png" id="1_ub1rf"]
+[ext_resource type="FontFile" uid="uid://bg7ubt6cnbgfq" path="res://Assets/Fonts/Kenney Future Narrow.ttf" id="2_get86"]
+
+[node name="Node2D" type="Node2D" unique_id=1562018604]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2093057086]
+texture = ExtResource("1_ub1rf")
+
+[node name="Label" type="Label" parent="Sprite2D" unique_id=1169336704]
+offset_left = -97.0
+offset_top = -54.0
+offset_right = 98.0
+offset_bottom = -31.0
+theme_override_fonts/font = ExtResource("2_get86")
+text = "+20 damage modifier"

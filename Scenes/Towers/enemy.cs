@@ -7,15 +7,18 @@ public partial class Enemy : PathFollow2D
     protected virtual int StartingHealth => 50;
     protected virtual int StartingDamage => 21;
     protected virtual int StartingSpeed => 100;
+    protected virtual int StartingCash => 50;
     protected int health;
     protected int damage;
     protected int speed;
+    protected int grantCash;
 
     public override void _Ready()
     {
         health = StartingHealth;
         damage = StartingDamage;
         speed = StartingSpeed;
+        grantCash = StartingCash;
 
         var healthBar = GetNode<TextureProgressBar>("HealthBar");
         healthBar.TopLevel = true;
@@ -54,6 +57,8 @@ public partial class Enemy : PathFollow2D
     }
     public virtual void OnDestroy()
     {
+        var gameScene = GetNode<GameScene>("../../..");
+        gameScene.changeCash(grantCash);
         QueueFree();
     } 
     private void move(double delta)
