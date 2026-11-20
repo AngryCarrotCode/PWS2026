@@ -31,7 +31,7 @@ public partial class GameData : Node
 				{ "range", 550 },
 				{ "fireRate", 3f },
 				{ "category", "missile" },
-				{"cost", 400 }
+				{ "cost", 300 }
 			}
 		}
 	};

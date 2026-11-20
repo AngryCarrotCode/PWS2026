@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://cnsdaqbe3t2hd"]
+
+[ext_resource type="Script" uid="uid://y5xd7hi0e6ed" path="res://WinScreen.cs" id="1_bc332"]
+[ext_resource type="Texture2D" uid="uid://5vcvtxdmieii" path="res://Assets/UI/cardboard.jpg" id="1_ddy7k"]
+[ext_resource type="FontFile" uid="uid://bg7ubt6cnbgfq" path="res://Assets/Fonts/Kenney Future Narrow.ttf" id="2_bc332"]
+[ext_resource type="Texture2D" uid="uid://cj4oyeox1pqka" path="res://Assets/UI/Buttons/button_square_depth_gradient.png" id="3_bf54k"]
+[ext_resource type="Texture2D" uid="uid://v7n62kyku7yq" path="res://Assets/UI/Buttons/button_square_depth_gloss.png" id="4_ujsyp"]
+[ext_resource type="Texture2D" uid="uid://dinvuogeo0r6y" path="res://Assets/UI/Buttons/button_square_depth_flat.png" id="5_vr2rx"]
+
+[sub_resource type="Theme" id="Theme_urab4"]
+default_font = ExtResource("2_bc332")
+default_font_size = 25
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4sxsc"]
+texture = ExtResource("3_bf54k")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6spu"]
+texture = ExtResource("4_ujsyp")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7d5xy"]
+texture = ExtResource("5_vr2rx")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="Node2D" type="Node2D" unique_id=1896801456]
+script = ExtResource("1_bc332")
+
+[node name="popup" type="TextureRect" parent="." unique_id=1772241490]
+custom_minimum_size = Vector2(600, 500)
+custom_maximum_size = Vector2(600, 500)
+offset_right = 600.0
+offset_bottom = 500.0
+texture = ExtResource("1_ddy7k")
+
+[node name="Label" type="Label" parent="popup" unique_id=2132363267]
+custom_minimum_size = Vector2(500, 100)
+custom_maximum_size = Vector2(500, 100)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 25.0
+offset_right = 550.0
+offset_bottom = 75.0
+theme_override_fonts/font = ExtResource("2_bc332")
+theme_override_font_sizes/font_size = 37
+text = "You have defeated 
+ the army!"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="popup" unique_id=350750859]
+custom_minimum_size = Vector2(500, 100)
+custom_maximum_size = Vector2(500, 100)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 125.0
+offset_right = 550.0
+offset_bottom = 225.0
+theme_override_fonts/font = ExtResource("2_bc332")
+theme_override_font_sizes/font_size = 30
+text = "now what?"
+horizontal_alignment = 1
+
+[node name="QuitGame" type="Button" parent="popup" unique_id=639887733]
+custom_minimum_size = Vector2(350, 75)
+layout_mode = 0
+offset_left = 125.0
+offset_top = 251.2
+offset_right = 475.0
+offset_bottom = 326.20013
+size_flags_vertical = 2
+theme = SubResource("Theme_urab4")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_styles/normal = SubResource("StyleBoxTexture_4sxsc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_f6spu")
+theme_override_styles/hover = SubResource("StyleBoxTexture_7d5xy")
+text = "Quit Game"
+
+[connection signal="pressed" from="popup/QuitGame" to="." method="onQuitGamePressed"]

@@ -12,6 +12,7 @@ public partial class Enemy : PathFollow2D
     protected int damage;
     protected int speed;
     protected int grantCash;
+    private bool resolved;
 
     public override void _Ready()
     {
@@ -31,9 +32,18 @@ public partial class Enemy : PathFollow2D
 
     public override void _PhysicsProcess(double delta)
     {
-        if(ProgressRatio == 1.0f){
+        if (resolved)
+        {
+            return;
+        }
+
+        if (ProgressRatio >= 1.0f){
+            resolved = true;
             EmitSignal(SignalName.BaseDamage, damage);
+            var gameScene = GetNode<GameScene>("../../..");
+            gameScene.OnEnemyRemoved();
             QueueFree();
+            return;
         }
         move(delta);
     }
@@ -57,8 +67,15 @@ public partial class Enemy : PathFollow2D
     }
     public virtual void OnDestroy()
     {
+        if (resolved)
+        {
+            return;
+        }
+
+        resolved = true;
         var gameScene = GetNode<GameScene>("../../..");
         gameScene.changeCash(grantCash);
+        gameScene.OnEnemyRemoved();
         QueueFree();
     } 
     private void move(double delta)

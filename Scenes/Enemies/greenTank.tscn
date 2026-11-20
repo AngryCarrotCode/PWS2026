@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bwdipidyhowg0"]
+
+[ext_resource type="Texture2D" uid="uid://6hh27m7g4j8c" path="res://Assets/Enemies/tank_red.png" id="1_3v4rk"]
+[ext_resource type="Script" uid="uid://rmhv5x8qo6th" path="res://Scenes/Enemies/GreenTank.cs" id="2_mmnee"]
+[ext_resource type="Texture2D" uid="uid://rwe37g8qlysv" path="res://Assets/UI/HPbar.jpg" id="3_40s8c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_umclc"]
+size = Vector2(64, 48)
+
+[node name="GreenTank" type="PathFollow2D" unique_id=561758189]
+loop = false
+script = ExtResource("2_mmnee")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=919771703]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=1826826586]
+modulate = Color(0, 1, 0, 1)
+scale = Vector2(1.3695651, 1)
+texture = ExtResource("1_3v4rk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=2122207458]
+shape = SubResource("RectangleShape2D_umclc")
+
+[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=794079156]
+custom_minimum_size = Vector2(60, 6)
+custom_maximum_size = Vector2(60, 6)
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(-30, -30)
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_40s8c")
+texture_progress = ExtResource("3_40s8c")
+tint_under = Color(0.20871013, 0.20871016, 0.20871013, 1)
+tint_progress = Color(0, 0.7607843, 0, 1)

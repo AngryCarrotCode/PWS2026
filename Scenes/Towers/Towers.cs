@@ -16,16 +16,17 @@ public partial class Towers : Node2D
 	public string category;
 	private GameData gameData;
 	public int damageModifier;
+	public float damageBonusPercent;
+	public float damageBonus;
+	public float fireRateBonus;
+	public float bonusRange;
 
 
 	public override void _Ready()
-    {
-        if(built)
-        {
-			((CircleShape2D)GetNode<CollisionShape2D>("Range/CollisionShape2D").Shape).Radius = 0.5f * Convert.ToSingle(GetNode<GameData>("/root/GameData").towerData[towerType]["range"]);
-        }
-        gameData = GetNode<GameData>("/root/GameData");
-    }
+	{
+		gameData = GetNode<GameData>("/root/GameData");
+		CalculateRange();
+	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -36,13 +37,22 @@ public partial class Towers : Node2D
 		if(enemyArray.Count != 0 && built){
 			selectEnemy();
         	Turn();
-			if (ready && enemy.GlobalPosition.X > 0){
+			if (ready && enemy.GlobalPosition.X > 0){ //Intended behavior
 				_ = fire();
 			}
 		}else{
 			enemy = null;
 		}
     }
+	public void CalculateRange()
+	{
+		if(built)
+        {
+			var baseRange = Convert.ToSingle(gameData.towerData[towerType]["range"]);
+			var radius = 0.5f * (baseRange + bonusRange);
+			((CircleShape2D)GetNode<CollisionShape2D>("Range/CollisionShape2D").Shape).Radius = radius;
+        }
+	}
 	public void Turn()
 	{
 		var enemyPosition = enemy.Position;
@@ -81,9 +91,16 @@ public partial class Towers : Node2D
 				break;
 		}
 
-		var damage = Convert.ToInt32(gameData.towerData[towerType]["damage"]) + damageModifier;
+		var baseDamage = Convert.ToSingle(gameData.towerData[towerType]["damage"]);
+		var modifiedDamage = (baseDamage + damageModifier) * (1f + damageBonusPercent / 100f) + damageBonus;
+		var damage = Mathf.RoundToInt(modifiedDamage);
 		enemy.OnHit(damage);
-		await ToSignal(GetTree().CreateTimer(Convert.ToDouble(gameData.towerData[towerType]["fireRate"])), SceneTreeTimer.SignalName.Timeout);
+		var rof = Convert.ToDouble(gameData.towerData[towerType]["fireRate"])- fireRateBonus;
+		if (rof <= 0)
+		{
+			rof = 0.1f;
+		}
+		await ToSignal(GetTree().CreateTimer(rof) , SceneTreeTimer.SignalName.Timeout);
 		ready = true;
 	}
 

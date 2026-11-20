@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class Ui : CanvasLayer
 {
@@ -7,7 +9,8 @@ public partial class Ui : CanvasLayer
 	int towerRange = 350;
 	private TextureProgressBar hpBar;
 	private GameData gameData;
-	private Node2D cardPreview;
+	public Node2D cardPreview;
+	private Cardbox cardBoxPreview;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -103,8 +106,48 @@ public partial class Ui : CanvasLayer
 		GetTree().Quit();
 	}
 		
-
 	public void onCardPressed()
+	{
+		if (!GetParent<GameScene>().CardPreviewActive)
+		{
+			if (GetParent<GameScene>().changeCash(GameScene.cardCost))
+			{
+				if (GodotObject.IsInstanceValid(cardBoxPreview))
+				{
+					cardBoxPreview.QueueFree();
+				}
+				var cardBox = GD.Load<PackedScene>("res://Scenes/Cards/cardbox.tscn");
+				cardBoxPreview = cardBox.Instantiate<Cardbox>();
+
+				var keys = new List<string>(Cards.cards.Keys);
+				var card1 = keys[Random.Shared.Next(keys.Count)];
+				var card2 = keys[Random.Shared.Next(keys.Count)];
+				var card3 = keys[Random.Shared.Next(keys.Count)];
+				while (card2 == card1)
+				{
+					card2 = keys[Random.Shared.Next(keys.Count)];
+				}
+				while (card3 == card1 || card3 == card2)
+				{
+					card3 = keys[Random.Shared.Next(keys.Count)];
+				}
+				cardBoxPreview.CardKeys = new[] { card1, card2, card3 };
+				cardBoxPreview.GetNode<TextureButton>("CardBox/Card1").TextureNormal = GD.Load<Texture2D>("res://Assets/Cards/" + Cards.cards[card1]["image"]);
+				cardBoxPreview.GetNode<TextureButton>("CardBox/Card2").TextureNormal = GD.Load<Texture2D>("res://Assets/Cards/" + Cards.cards[card2]["image"]);
+				cardBoxPreview.GetNode<TextureButton>("CardBox/Card3").TextureNormal = GD.Load<Texture2D>("res://Assets/Cards/" + Cards.cards[card3]["image"]);
+				cardBoxPreview.GetNode<Label>("CardBox/Card1/Description").Text = Cards.cards[card1]["description"];
+				cardBoxPreview.GetNode<Label>("CardBox/Card2/Description").Text = Cards.cards[card2]["description"];
+				cardBoxPreview.GetNode<Label>("CardBox/Card3/Description").Text = Cards.cards[card3]["description"];
+				cardBoxPreview.Name = "CardBoxPreview";
+				var viewportSize = GetViewport().GetVisibleRect().Size;
+				cardBoxPreview.GlobalPosition = (viewportSize - new Vector2(600, 500)) / 2;
+				AddChild(cardBoxPreview);
+				MoveChild(cardBoxPreview, 0);
+				GetParent<GameScene>().startCardBoxPreview();
+			}
+		}
+	}
+	/*public void onCardPressed()
 	{
 		if (GodotObject.IsInstanceValid(cardPreview))
 			cardPreview.QueueFree();
@@ -116,7 +159,7 @@ public partial class Ui : CanvasLayer
 		AddChild(cardPreview);
 		MoveChild(cardPreview, 0);
 		GetParent<GameScene>().startCardPreview();
-	}
+	}*/
 	public void UpdateHealthBar(int baseHealth){
 		var hpBarTween = CreateTween();
 		hpBarTween.TweenProperty(hpBar, "value", baseHealth, 0.1f);

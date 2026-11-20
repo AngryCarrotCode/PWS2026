@@ -68,6 +68,10 @@ size_flags_horizontal = 8
 theme_override_constants/separation = 3
 alignment = 2
 
+[node name="Spacing" type="Control" parent="M/VB" unique_id=916126970]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
 [node name="NewGame" type="Button" parent="M/VB" unique_id=1869120258]
 custom_minimum_size = Vector2(350, 75)
 layout_mode = 2
@@ -80,33 +84,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_cvn1r")
 theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
 text = "New  Game"
 
-[node name="LoadGame" type="Button" parent="M/VB" unique_id=1189472099]
-modulate = Color(0.1882353, 0.1882353, 0.1882353, 1)
-custom_minimum_size = Vector2(350, 75)
-layout_mode = 2
-size_flags_vertical = 2
-theme = SubResource("Theme_umclc")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 12
-theme_override_styles/normal = SubResource("StyleBoxTexture_hmtvc")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_cvn1r")
-theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
-text = "Load Game"
-
-[node name="Settings" type="Button" parent="M/VB" unique_id=1488582947]
-modulate = Color(0.18717614, 0.18717614, 0.18717614, 1)
-custom_minimum_size = Vector2(350, 75)
-layout_mode = 2
-size_flags_vertical = 2
-theme = SubResource("Theme_umclc")
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 12
-theme_override_styles/normal = SubResource("StyleBoxTexture_hmtvc")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_cvn1r")
-theme_override_styles/hover = SubResource("StyleBoxTexture_1dh2t")
-text = "Settings"
-
-[node name="Spacing" type="Control" parent="M/VB" unique_id=916126970]
+[node name="Spacing2" type="Control" parent="M/VB" unique_id=1233379084]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
